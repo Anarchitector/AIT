@@ -86,23 +86,13 @@ public class CurrencyConverter {
             else {
                 sum = Double.parseDouble(s);
 
-                switch (initCurr) {
-                    case "eur": {
-                        switch (finalCurr) {
-                            case "usd": {
-                                sum *= eur_usd_rate;
-                                break;
-                            }
-                            case "mdl": {
-                                sum *= eur_mdl_rate;
-                                break;
-                            }
-                            default: {
-                                break;
-                            }
-                        }
+                switch (initCurr + "-" + finalCurr) {
+                    case "eur-usd":
+                        sum *= eur_usd_rate;
                         break;
-                    }
+                    case "eur-mdl":
+                        sum *= eur_mdl_rate;
+                        break;
                     case "usd": {
                         switch (finalCurr) {
                             case "eur": {
