@@ -32,7 +32,7 @@ public class CurrencyConverter {
             }
 
             do {
-                System.out.print("Выберите валюту для продажи (Введите номер валюты): ");
+                System.out.print("Введите валюту для продажи (или введите exit для выхода из программы): ");
                 initCurr = sc.nextLine();
 
                 if (initCurr.equals("exit")) {
@@ -55,7 +55,7 @@ public class CurrencyConverter {
 
             correctCurr = false;
             do {
-                System.out.print(("Выберите валюту для покупки (Введите номер валюты): "));
+                System.out.print(("Введите валюту для покупки (или введите exit для выхода из программы): "));
                 finalCurr = sc.nextLine();
 
                 if (finalCurr.equals("exit")) {
@@ -77,62 +77,36 @@ public class CurrencyConverter {
             }
 
             System.out.print("Введите сумму " + initCurr + " для обмена на " + finalCurr + ": ");
-//            sum = sc.nextDouble();
             s = sc.nextLine();
 
             if (s.equals("exit")) {
                 return;
-            }
-            else {
+            } else {
                 sum = Double.parseDouble(s);
 
-                switch (initCurr) {
-                    case "eur": {
-                        switch (finalCurr) {
-                            case "usd": {
-                                sum *= eur_usd_rate;
-                                break;
-                            }
-                            case "mdl": {
-                                sum *= eur_mdl_rate;
-                                break;
-                            }
-                            default: {
-                                break;
-                            }
-                        }
+                switch (initCurr + "-" + finalCurr) {
+                    case "eur-usd": {
+                        sum *= eur_usd_rate;
                         break;
                     }
-                    case "usd": {
-                        switch (finalCurr) {
-                            case "eur": {
-                                sum *= usd_eur_rate;
-                                break;
-                            }
-                            case "mdl": {
-                                sum *= usd_mdl_rate;
-                                break;
-                            }
-                            default: {
-                                break;
-                            }
-                        }
+                    case "eur-mdl": {
+                        sum *= eur_mdl_rate;
                         break;
                     }
-                    case "mdl": {
-                        switch (finalCurr) {
-                            case "eur": {
-                                sum *= mdl_eur_rate;
-                                break;
-                            }
-                            case "usd": {
-                                sum *= mdl_usd_rate;
-                                break;
-                            }
-                            default: {
-                                break;
-                            }
-                        }
+                    case "usd-eur": {
+                        sum *= usd_eur_rate;
+                        break;
+                    }
+                    case "usd-mdl": {
+                        sum *= usd_mdl_rate;
+                        break;
+                    }
+                    case "mdl-eur": {
+                        sum *= mdl_eur_rate;
+                        break;
+                    }
+                    case "mdl-usd": {
+                        sum *= mdl_usd_rate;
                         break;
                     }
                     default: {
@@ -140,11 +114,7 @@ public class CurrencyConverter {
                     }
                 }
             }
-
-
-            System.out.println("Итого: " + sum + " " + finalCurr);
+            System.out.println("Итого: " + sum + " " + finalCurr + "\n");
         } while (true);
-
     }
-
 }
