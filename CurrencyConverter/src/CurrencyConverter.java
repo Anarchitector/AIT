@@ -143,7 +143,7 @@ public class CurrencyConverter {
 
 
             System.out.println("Итого: " + sum + " " + finalCurr);
-        } while ();
+        } while (true);
 
     }
 
