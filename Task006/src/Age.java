@@ -27,7 +27,7 @@ public class Age {
             System.out.println("Подросток");
         }
         else {
-            System.out.println(((age > adolMaxAge) && (age <= adultMaxAge)) ? ("Взрослый") : ("Пожилой"));
+            System.out.println((/*(age > adolMaxAge) && */(age <= adultMaxAge)) ? ("Взрослый") : ("Пожилой"));
         }
 
     }
