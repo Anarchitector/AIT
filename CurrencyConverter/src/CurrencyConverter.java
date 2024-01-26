@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class CurrencyConverter {
     public static void main(String[] args) {
         String initCurr, finalCurr;
-        double sum = 0;
-        int allCurr = 3;
+        short allCurr = 3;
         Scanner sc = new Scanner(System.in);
         String s;
         String[] currName = new String[allCurr];
@@ -15,21 +14,11 @@ public class CurrencyConverter {
         currName[2] = "mdl";
         boolean correctCurr = false;
 
-        double eur_usd_rate = 1.07;
-        double usd_eur_rate = 0.9;
-        double eur_mdl_rate = 19.17;
-        double mdl_eur_rate = 0.05;
-        double usd_mdl_rate = 17.6;
-        double mdl_usd_rate = 0.06;
-
         System.out.print("\033[H\033[J");
         System.out.println("\n\t\t***** Приветствуем вас в программе CurrencyConverter *****\n");
 
         do {
-            System.out.println("Список валют:");
-            for (short i = 0; i < allCurr; i++) {
-                System.out.println((i + 1) + ". " + currName[i]);
-            }
+            PrintAllCurrencies(currName, allCurr);
 
             do {
                 System.out.print("Введите валюту для продажи (или введите exit для выхода из программы): ");
@@ -38,12 +27,7 @@ public class CurrencyConverter {
                 if (initCurr.equals("exit")) {
                     break;
                 }
-                for (int i = 0; i < allCurr; i++) {
-                    if (initCurr.equals(currName[i])) {
-                        correctCurr = true;
-                        break;
-                    }
-                }
+                correctCurr = VerifyCurrency(initCurr, currName, allCurr);
                 if (!correctCurr) {
                     System.out.println("Вы ввели неверное значение.");
                 }
@@ -61,12 +45,7 @@ public class CurrencyConverter {
                 if (finalCurr.equals("exit")) {
                     break;
                 }
-                for (int i = 0; i < allCurr; i++) {
-                    if (finalCurr.equals((currName[i]))) {
-                        correctCurr = true;
-                        break;
-                    }
-                }
+                correctCurr = VerifyCurrency(finalCurr, currName, allCurr);
                 if (!correctCurr) {
                     System.out.println("Вы ввели неверное значение.");
                 }
@@ -82,39 +61,73 @@ public class CurrencyConverter {
             if (s.equals("exit")) {
                 return;
             } else {
-                sum = Double.parseDouble(s);
-
-                switch (initCurr + "-" + finalCurr) {
-                    case "eur-usd": {
-                        sum *= eur_usd_rate;
-                        break;
-                    }
-                    case "eur-mdl": {
-                        sum *= eur_mdl_rate;
-                        break;
-                    }
-                    case "usd-eur": {
-                        sum *= usd_eur_rate;
-                        break;
-                    }
-                    case "usd-mdl": {
-                        sum *= usd_mdl_rate;
-                        break;
-                    }
-                    case "mdl-eur": {
-                        sum *= mdl_eur_rate;
-                        break;
-                    }
-                    case "mdl-usd": {
-                        sum *= mdl_usd_rate;
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
-                }
+                System.out.println("Итого: " + CalculateSum(s, initCurr, finalCurr) + " " + finalCurr + "\n");
             }
-            System.out.println("Итого: " + sum + " " + finalCurr + "\n");
         } while (true);
     }
+
+
+    public static void PrintAllCurrencies(String[] currName, short allCurr) {
+        System.out.println("Список валют:");
+        for (short i = 0; i < allCurr; i++) {
+            System.out.println((i + 1) + ". " + currName[i]);
+        }
+    }
+
+    public static boolean VerifyCurrency(String s, String[] currName, short allCurr) {
+        boolean correctCurr = false;
+
+        for (int i = 0; i < allCurr; i++) {
+            if (s.equals(currName[i])) {
+                correctCurr = true;
+                break;
+            }
+        }
+        return correctCurr;
+    }
+
+    public static double CalculateSum(String s, String initCurr, String finalCurr) {
+
+        double sum = 0;
+        double eur_usd_rate = 1.07;
+        double usd_eur_rate = 0.9;
+        double eur_mdl_rate = 19.17;
+        double mdl_eur_rate = 0.05;
+        double usd_mdl_rate = 17.6;
+        double mdl_usd_rate = 0.06;
+
+        sum = Double.parseDouble(s);
+
+        switch (initCurr + "-" + finalCurr) {
+            case "eur-usd": {
+                sum *= eur_usd_rate;
+                break;
+            }
+            case "eur-mdl": {
+                sum *= eur_mdl_rate;
+                break;
+            }
+            case "usd-eur": {
+                sum *= usd_eur_rate;
+                break;
+            }
+            case "usd-mdl": {
+                sum *= usd_mdl_rate;
+                break;
+            }
+            case "mdl-eur": {
+                sum *= mdl_eur_rate;
+                break;
+            }
+            case "mdl-usd": {
+                sum *= mdl_usd_rate;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        return sum;
+    }
+
 }
