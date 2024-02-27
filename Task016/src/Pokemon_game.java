@@ -64,7 +64,7 @@ class Pokemon{
     }
 
     public boolean isSleep() {
-        if (this.HP <= 0) {
+        if(this.HP <= 0) {
             isSleep = true;
         }
         else {
@@ -89,31 +89,7 @@ class Pokemon{
         System.out.println("3. Максимальная атака");
         System.out.println("4. Максимальная защита");
     }
- /*
-    public int chosenAction(Action action) {
-        switch (action)
-        {
-            case ATTACK:
-            {
-                return 1;
-            }
-            case DEFENSE:
-            {
-                return 2;
-            }
-            case MAX_ATTACK:
-            {
-                return 3;
-            }
-            case MAX_DEFENSE:
-            {
-                return 4;
-            }
-            default:break;
-        }
-        return -1;
-    }
-*/
+
         public Action chosenAction(int actionNum) {
         switch (actionNum)
         {
@@ -137,14 +113,14 @@ class Pokemon{
         }
         return Action.NO_ACTION;
     }
-
 }
 
-
-
-
-
 public class Pokemon_game {
+
+    static int player1;
+    static int player2;
+    static int activePlayer;
+
     public static void main(String[] args) {
 
 /*
@@ -155,8 +131,6 @@ public class Pokemon_game {
         Pokemon pidgey = new Pokemon("Pidgey");
         Pokemon pikachu = new Pokemon("Pikachu");
 */
-        int player1, player2;
-        int activePlayer;
         Pokemon.Action action;
         Scanner sc = new Scanner(System.in);
         Pokemon[] pokemons = {
@@ -176,42 +150,30 @@ public class Pokemon_game {
         System.out.println("Выберите покемона противника: ");
         player2 = sc.nextInt() - 1;
         System.out.println("Ваш противник - " + pokemons[player2].name);
+        activePlayer = player1;
 
         do{
-            activePlayer = player1;
             System.out.println("Выберите действие: ");
             pokemons[activePlayer].listActions();
             action = pokemons[activePlayer].chosenAction(sc.nextInt());
 
-            switch(action)
+            if ((!pokemons[player1].isSleep)||(!pokemons[player2].isSleep))
             {
-                case ATTACK:
-                {
-                    fight(action, pokemons[player1], pokemons[player2]);
-                    break;
-                }
-                case DEFENSE:
-                {
-
-                    break;
-                }
-                case MAX_ATTACK:
-                {
-
-                    break;
-                }
-                case MAX_DEFENSE:
-                {
-
-                    break;
-                }
+                fight(action, pokemons[player1], pokemons[player2]);
+            }
+            else {
+                System.out.println("Покемон все еще без сознания");
             }
 
+            if (pokemons[activePlayer].HP <= 0)
+            {
+                pokemons[activePlayer].isSleep();
+            }
+
+            activePlayer = changePlayer(activePlayer);
 
 
-        }while (pokemons[activePlayer].HP <= 0);
-
-
+        }while (pokemons[activePlayer].HP >= 0);
     }
 
     public static void welcomeMessage()
@@ -230,7 +192,6 @@ public class Pokemon_game {
 
     public static void fight(Pokemon.Action action, Pokemon attacker, Pokemon defender)
     {
-//        Random random = new Random();
         int damage = attacker.attack - defender.defense;
         if (defender.reduceHP(damage)) {
             System.out.println("Покемон " + defender.name + "получил урон" + damage);
@@ -241,9 +202,22 @@ public class Pokemon_game {
         }
     }
 
-    public static void sleep(Pokemon pokemon)
+    public static int changePlayer(int activePlayer)
     {
-
+        switch(activePlayer)
+        {
+            case 1 :
+            {
+                return player2;
+            }
+            case 2:
+            {
+                return player1;1
+            }
+            default: {
+                return -1;
+            }
+        }
     }
 
 
