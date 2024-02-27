@@ -13,17 +13,17 @@ class Pokemon{
 //    boolean isDefenseActive;
 //    boolean isSpDefenseActive;
 
-    final short maxHP = 100;
+    final short maxHP = 10;
     boolean isSleep = false;
 
     Pokemon()
     {
         this.HP = maxHP;
-        this.attack = 100;
-        this.defense = 100;
-        this.special_attack = 100;
-        this.special_defense = 100;
-        this.speed = 100;
+        this.attack = 10;
+        this.defense = 10;
+        this.special_attack = 10;
+        this.special_defense = 10;
+        this.speed = 10;
         this.name = "Pokemon";
     }
 
@@ -120,17 +120,10 @@ public class Pokemon_game {
     static int player1;
     static int player2;
     static int activePlayer;
+    static int inactivePlayer;
 
     public static void main(String[] args) {
 
-/*
-        Pokemon bulbasaur = new Pokemon("Bulbasaur");
-        Pokemon charmander = new Pokemon("Charmander");
-        Pokemon squirtle = new Pokemon("Squirtle");
-        Pokemon beedrile = new Pokemon("Beedrile");
-        Pokemon pidgey = new Pokemon("Pidgey");
-        Pokemon pikachu = new Pokemon("Pikachu");
-*/
         Pokemon.Action action;
         Scanner sc = new Scanner(System.in);
         Pokemon[] pokemons = {
@@ -151,15 +144,16 @@ public class Pokemon_game {
         player2 = sc.nextInt() - 1;
         System.out.println("Ваш противник - " + pokemons[player2].name);
         activePlayer = player1;
+        inactivePlayer = player2;
 
         do{
-            System.out.println("Выберите действие: ");
+            System.out.println("Выберите действие: \n");
             pokemons[activePlayer].listActions();
             action = pokemons[activePlayer].chosenAction(sc.nextInt());
 
-            if ((!pokemons[player1].isSleep)||(!pokemons[player2].isSleep))
+            if ((!pokemons[activePlayer].isSleep)||(!pokemons[inactivePlayer].isSleep))
             {
-                fight(action, pokemons[player1], pokemons[player2]);
+                fight(action, pokemons[activePlayer], pokemons[inactivePlayer]);
             }
             else {
                 System.out.println("Покемон все еще без сознания");
@@ -170,10 +164,10 @@ public class Pokemon_game {
                 pokemons[activePlayer].isSleep();
             }
 
-            activePlayer = changePlayer(activePlayer);
+            changePlayer();
 
 
-        }while (pokemons[activePlayer].HP >= 0);
+        }while ((pokemons[activePlayer].HP > 0) || (pokemons[inactivePlayer].HP > 0));
     }
 
     public static void welcomeMessage()
@@ -202,29 +196,24 @@ public class Pokemon_game {
         }
     }
 
-    public static int changePlayer(int activePlayer)
+    public static void sleep(Pokemon pokemon)
     {
-        switch(activePlayer)
+        if (pokemon.HP <= 0)
         {
-            case 1 :
-            {
-                return player2;
-            }
-            case 2:
-            {
-                return player1;1
-            }
-            default: {
-                return -1;
-            }
+            pokemon.isSleep = true;
         }
     }
 
-
-
-
-
-//    public static void fight(Pokemon f, Pokemon s, Pokemon. attackType, Pokemon.Action defenseType) {
-//        s.HP = s.HP - (f.attack - s.defense);
-
+    public static void changePlayer()
+    {
+        if (activePlayer == player1)
+        {
+            activePlayer = player2;
+            inactivePlayer = player1;
+        }
+        else {
+            activePlayer = player1;
+            inactivePlayer = player2;
+        }
+    }
 }
