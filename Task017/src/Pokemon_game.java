@@ -60,18 +60,6 @@ public class Pokemon_game {
                         pokemons[inactivePlayer].automaticRestore();
                 }
 
- /*           if (!pokemons[activePlayer].getStatus()) {
-                System.out.println(pokemons[activePlayer].getName() + " потерял сознание.");
-            }
-
-                if (!pokemons[inactivePlayer].getStatus())
-                {
-                    System.out.println(pokemons[inactivePlayer].getName() + " потерял сознание.");
-                    pokemons[inactivePlayer].automaticRestore();
-                }
-*/
-
-
                 if (pokemons[inactivePlayer].getStatus())
                 {
                     changePlayer();
@@ -117,12 +105,12 @@ public class Pokemon_game {
         }
 
     }
-//?
+
     public static int fight(int attack, int defense)
     {
         return attack - defense;
     }
-//?
+
     public static void changePlayer()
     {
         if (activePlayer == player1)
