@@ -12,6 +12,8 @@ public class Pokemon_game {
 
         Pokemon.Action action;
         Scanner sc = new Scanner(System.in);
+        int damage;
+        short move_transition = 0;
         Pokemon[] pokemons = {
             new Pokemon(5,2,8,4,10,"Bulbasaur"),
             new Pokemon(6,3,8,5,11,"Charmander"),
@@ -23,37 +25,71 @@ public class Pokemon_game {
 
         welcomeMessage();
         System.out.println("\n\tВыберите себе покемона из представленного списка:");
-        listPokemon(pokemons);
+        listPokemons(pokemons);
         player1 = sc.nextInt() - 1;
         System.out.println("Вы выбрали покемона " + pokemons[player1].getName());
         System.out.println("Выберите покемона противника: ");
         player2 = sc.nextInt() - 1;
-        System.out.println("Ваш противник - " + pokemons[player2].getName());
+        System.out.println("Ваш противник - " + pokemons[player2].getName() + "\n");
         activePlayer = player1;
         inactivePlayer = player2;
 
         do{
-            System.out.println("Выберите действие: \n");
-            pokemons[activePlayer].listActions();
-            action = pokemons[activePlayer].chosenAction(sc.nextInt());
+            move_transition++;
+            System.out.println("\nНомер хода : " + move_transition);
+            System.out.println("\nХод покемона " + pokemons[activePlayer].getName());
+            System.out.println("Cтатус покемона:");
+            listPokemonParam(pokemons[activePlayer]);
 
-            if ((!pokemons[activePlayer].isSleep())||(!pokemons[inactivePlayer].isSleep()))
+            if (pokemons[inactivePlayer].getStatus())
             {
-                fight(action, pokemons[activePlayer], pokemons[inactivePlayer]);
-            }
-            else {
-                System.out.println("Покемон все еще без сознания");
+                System.out.println("Выберите действие: ");
+                pokemons[activePlayer].listActions();
+                action = pokemons[activePlayer].chosenAction(sc.nextInt());
+
+                if ((action == Pokemon.Action.ATTACK)&&
+                        ((pokemons[activePlayer].getStatus())||(pokemons[inactivePlayer].getStatus())))
+                {
+                    damage = fight(pokemons[activePlayer].getAttack(), pokemons[inactivePlayer].getDefence());
+                    pokemons[inactivePlayer].setReduceHP(damage);
+                    System.out.println("Покемон " + pokemons[inactivePlayer].getName() + " получил урон " + damage);
+                    System.out.println("HP осталось " + pokemons[inactivePlayer].getHP());
+                }
+                else {
+                        listPokemonParam(pokemons[inactivePlayer]);
+                        pokemons[inactivePlayer].automaticRestore();
+                }
+
+ /*           if (!pokemons[activePlayer].getStatus()) {
+                System.out.println(pokemons[activePlayer].getName() + " потерял сознание.");
             }
 
-            if (pokemons[activePlayer].getHP() <= 0)
+                if (!pokemons[inactivePlayer].getStatus())
+                {
+                    System.out.println(pokemons[inactivePlayer].getName() + " потерял сознание.");
+                    pokemons[inactivePlayer].automaticRestore();
+                }
+*/
+
+
+                if (pokemons[inactivePlayer].getStatus())
+                {
+                    changePlayer();
+                }
+            }
+            else
             {
-                pokemons[activePlayer].isSleep();
+                System.out.println("Покемон " + pokemons[inactivePlayer].getName() + " все еще без сознания.\n" +
+                                    "Переход хода не состоялся.");
+                pokemons[inactivePlayer].automaticRestore();
+                if ((!pokemons[inactivePlayer].getStatus()) && pokemons[inactivePlayer].getHP() >= 3)
+                {
+                    pokemons[inactivePlayer].setActiveStatus();
+                    System.out.println(pokemons[inactivePlayer].getName() + " готов к бою. Ход переходит к " + pokemons[inactivePlayer].getName());
+                    changePlayer();
+                }
             }
-
-            changePlayer();
-
-
-        }while ((pokemons[activePlayer].getHP() > 0) || (pokemons[inactivePlayer].getHP() > 0));
+        }while (move_transition <= 20);
     }
 
     public static void welcomeMessage()
@@ -61,7 +97,7 @@ public class Pokemon_game {
         System.out.println("\t\t***** Добро пожаловать в игру Покемоны *****\n");
     }
 
-    public static void listPokemon(Pokemon[] pokemons)
+    public static void listPokemons(Pokemon[] pokemons)
     {
         short i = 0;
         for (Pokemon pokemon : pokemons) {
@@ -69,27 +105,24 @@ public class Pokemon_game {
             System.out.println(i + ". " + pokemon.getName());
         }
     }
-//?
-    public static void fight(Pokemon.Action action, Pokemon attacker, Pokemon defender)
+
+    public static void listPokemonParam(Pokemon pokemons)
     {
-        int damage = attacker.attack - defender.defense;
-        if (defender.reduceHP(damage)) {
-            System.out.println("Покемон " + defender.getName() + "получил урон" + damage);
-            System.out.println("HP осталось " + defender.getHP());
+        System.out.println("HP : " + pokemons.getHP());
+        if (pokemons.getStatus()) {
+            System.out.println("Статус : Готов к бою\n");
         }
         else {
-            System.out.println(defender.getName() + " не получил урон");
+            System.out.println("Статус : Покемон все еще без сознания\n");
         }
+
     }
 //?
-    public static void sleep(Pokemon pokemon)
+    public static int fight(int attack, int defense)
     {
-        if (pokemon.getHP() <= 0)
-        {
-            pokemon.isSleep();
-        }
+        return attack - defense;
     }
-
+//?
     public static void changePlayer()
     {
         if (activePlayer == player1)

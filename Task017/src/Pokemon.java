@@ -6,6 +6,7 @@ class Pokemon{
     private int special_defense;
     private int speed;
     private String name;
+    private boolean active;
 //   private  boolean isDefenseActive;
 //   private  boolean isSpDefenseActive;
 
@@ -21,6 +22,7 @@ class Pokemon{
         this.special_defense = 10;
         this.speed = 10;
         this.name = "Pokemon";
+        this.active = true;
     }
 
     Pokemon(int attack, int defense, int special_attack, int special_defense, int speed, String name)
@@ -40,7 +42,6 @@ class Pokemon{
         this.name = name;
     }
 
-
     // Getters
     public int getHP()           { return this.HP; }
     public int getAttack()       { return this.attack; }
@@ -49,48 +50,53 @@ class Pokemon{
     public int getSpDefence()    { return this.special_defense; }
     public int getSpeed()        { return this.speed; }
     public String getName()      { return this.name; }
+    public boolean getStatus()   { return this.active; }
 
     //Setters
 
     public void setReduceHP(int hit)
     {
         this.HP -= hit;
-        if (this.HP < 0)
+        if (this.HP <= 0)
         {
             this.HP = 0;
+            this.setSleepStatus();
         }
     }
 
-    public void setRehabHP(int rehab)
+    public void setRestoreHP(int restore)
     {
-        this.HP += rehab;
+        if (this.HP < maxHP)
+        {
+            this.HP += restore;
+        }
         if (this.HP > maxHP)
         {
             this.HP = maxHP;
         }
-    }
-
-    public boolean reduceHP(int hit) {
-        if (this.HP >= hit) {
-            this.HP -= hit;
-            return true;
-        } else {
-            return false;
+        if ((!this.getStatus()) && (this.HP >= 3))
+        {
+            this.setActiveStatus();
         }
     }
 
-    public boolean restoreHP() {
-        if ((this.HP <= maxHP) && (this.isSleep())) {
-            this.HP += 10;
-            return true;
+    public void automaticRestore()
+    {
+        if (this.HP < maxHP)
+        {
+            this.HP += 1;
         }
-        else {
-            return false;
-        }
+
     }
 
-    public boolean isSleep() {
-        return this.HP <= 0;
+    public void setSleepStatus()
+    {
+        this.active = false;
+    }
+
+    public void setActiveStatus()
+    {
+        this.active = true;
     }
 
     public enum Action {
