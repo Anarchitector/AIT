@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 class Pokemon{
     private int HP;
     private int attack;
@@ -7,15 +9,23 @@ class Pokemon{
     private int speed;
     private String name;
     private boolean active;
+    private final static double additionalHP;
 //   private  boolean isDefenseActive;
 //   private  boolean isSpDefenseActive;
 
-    public static final short MAX_HP = 10;
+    final short maxHP = 10;
+
+    static {
+        System.out.print("Введите значение дополнительного НР : ");
+        Scanner sc = new Scanner(System.in);
+        additionalHP = sc.nextInt();
+    }
+
 
     //Constructor
     Pokemon()
     {
-        this.HP = MAX_HP;
+        this.HP = maxHP;
         this.attack = 10;
         this.defense = 10;
         this.special_attack = 10;
@@ -66,13 +76,13 @@ class Pokemon{
 
     public void setRestoreHP(int restore)
     {
-        if (this.HP < MAX_HP)
+        if (this.HP < maxHP)
         {
             this.HP += restore;
         }
-        if (this.HP > MAX_HP)
+        if (this.HP > maxHP)
         {
-            this.HP = MAX_HP;
+            this.HP = maxHP;
         }
         if ((!this.getStatus()) && (this.HP >= 3))
         {
@@ -82,7 +92,7 @@ class Pokemon{
 
     public void automaticRestore()
     {
-        if (this.HP < MAX_HP)
+        if (this.HP < maxHP)
         {
             this.HP += 1;
         }
