@@ -9,25 +9,51 @@
     <h1>Signup Form</h1>
     <form>
       <label for="name">Name</label>
-      <input 
-        id="name" 
-        type="text" 
-        placeholder="Enter your name" 
-        required 
+      <input
+        id="name"
+        type="text"
+        placeholder="Enter your name"
+        required
       />
 
+      <label for="password">Password</label>
       <input
         id="password"
         type="password"
-        placeholder="Please enter the password"
+        placeholder="Enter your password"
         minlength="8"
         required
       />
 
-      <label for="hobby">Hobby</label>
-      <select id="hobby">
-        <option></option>
-      </select>
+      <label for="age">Age</label>
+      <input id="age" type="number" placeholder="Age" />
+
+      <label for="tel">Phone</label>
+      <input id="tel" type="tel" placeholder="Enter your phone" />
+
+      <label for="email">E-Mail</label>
+      <input 
+        id="email"
+        type="email"
+      />
+
+      <br>
+      <br>
+      <label for="date">Date</label>
+      <input
+        id="date"
+        type="date"
+      />
+      <br>
+      <br>
+      <label for="confirmation">Are you human?</label>
+      <input
+        id="confirmation"
+        type="checkbox"
+      />
+
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
     </form>
   </body>
 </html>
