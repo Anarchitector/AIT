@@ -39,18 +39,15 @@ body {
   .left, .middle, .right{
     position: absolute;
     width: 31%;
-    top: 15px
+    top: 15px;
   }
 
   .left{
-    left: 15px;
-    right: 750px;
-    
+    left: 15px;    
   }
 
   .middle{
-    left: 470px;
-    right: 15px;
+    left: 35%;
   }
 
 
