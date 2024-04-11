@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Ubuntu+Condensed&display=swap');
+
+body {
+  font-family: "Ubuntu Condensed";
+  background-color: #f2f2f2;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  /* Настройка тени: 
+        1. по оси x (положительное значение - вправо, отрицательное - влево);
+        2. по оси y (положительное значение - вниз, отрицательное - вверх);
+        3. размытие тени (как быстро тень сливается с фоном);
+        4. цвет тени.
+    */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: justify;
+
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+}
