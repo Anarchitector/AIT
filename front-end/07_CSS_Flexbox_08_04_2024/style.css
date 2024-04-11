@@ -1,33 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Ubuntu+Condensed&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+    /*Внешние отступы*/
+    margin : 0;
+    /*Внутренние отступы*/
+    padding : 0;
+}
 
 body {
-  font-family: "Ubuntu Condensed";
-  background-color: #f2f2f2;
-}
+    background-color: whitesmoke;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }
 
-h1 {
-  text-align: center;
-}
+  .header {
+    height : 400px;
+    background-image: url("./images/Coffee.jpg");
+    background-position: center;
+    background-size: cover;
+  }
 
-form {
-  width: 80%;
-  margin: 0 auto;
-  max-width: 1000px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  /* Настройка тени: 
-        1. по оси x (положительное значение - вправо, отрицательное - влево);
-        2. по оси y (положительное значение - вниз, отрицательное - вверх);
-        3. размытие тени (как быстро тень сливается с фоном);
-        4. цвет тени.
-    */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: justify;
+  h1 {
+    font-family: "Covered by Your Grace", cursive;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 100px;
+    text-align: center;
+    padding-top: 115px;
+    color: rgba(3,150,100,1);
+  }
 
-}
+  form {
+    width: 90%;
+    height: 230px;
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: justify;
+  }
 
-.link {
-  display: flex;
-  justify-content: center;
-}
+  .main {
+    position: relative;
+    font-family: "Ubuntu Condensed", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.5;
+  }
+
+  .left, .middle, .right{
+    position: absolute;
+    width: 31%;
+    top: 15px;
+  }
+
+  .left{
+    left: 15px;    
+  }
+
+  .middle{
+    left: 35%;
+  }
+
+
+  .right{
+    right: 15px;
+  }
+
+  .link {
+    display: flex;  
+    justify-content: center;
+    align-items: end;
+  }
