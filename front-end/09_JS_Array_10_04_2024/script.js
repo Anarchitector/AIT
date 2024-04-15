@@ -50,14 +50,23 @@ while (!inputDate) {
     inputDate = prompt('Enter book data separate by ";"');
 }
 
-function findIndexOfBook(index) {
+function findISBN(index) {
   for (i = 0; i < library.length; i++) {
     if (index === library[i].ISBN) {
-      return library[i];
+      return true;
     }
+    else return false;
   }
 }
 
+function findBookByISBN(index) {
+    for (i = 0; i < library.length; i++) {
+      if (index === library[i].ISBN) {
+        return library[i];
+      }
+      else alert("This book doesn't exist in our database");
+    }
+  }
 function splitStrIntoParts(inputDate) {
   let resStr = inputDate.trim();
   let obj = {
@@ -66,6 +75,7 @@ function splitStrIntoParts(inputDate) {
     AUTHOR: "",
     YEAR: "",
   };
+
 
   resStr = resStr.split(";");
   obj.ISBN = resStr[0];
@@ -78,6 +88,6 @@ function splitStrIntoParts(inputDate) {
 library.push(splitStrIntoParts(inputDate));
 console.log(library);
 let index = prompt("Введите ISDN");
-console.log(findIndexOfBook(index));
+console.log(findBookByISBN(index));
 
-//987654321;451 градус;Рэй Бредберри;1951
+//987654321;iPhuck 10;Виктор Пелевин;2017
