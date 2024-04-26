@@ -85,7 +85,7 @@ function updateAllTasks() {
 
       // 3. Наделяем его текстовым контентом
       li.textContent = `
-              Task name: ${e.name},
+              Task name: ${e.name}
           `;
 
       // HW - добавляем кнопку в каждый элемент списка
