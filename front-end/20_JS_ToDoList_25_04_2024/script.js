@@ -1,98 +1,72 @@
 const stock = {
   items: [
-    { name: "milk", price: 6, quantity: 50, isChecked: false },
-    { name: "cheese", price: 30, quantity: 70, isChecked: false },
-    { name: "meat", price: 30, quantity: 40, isChecked: false },
-    { name: "pizza", price: 30, quantity: 110, isChecked: false },
-    { name: "bread", price: 3, quantity: 100, isChecked: false },
-  ], // массив товаров
-  totalCost: 0, // суммарная стоимость всех товаров CRUD
+    { name: "Откосить", isChecked: false },
+    { name: "Забить", isChecked: false },
+    { name: "Расслабиться", isChecked: false },
+  ], // массив задач
+  totalTasks: 0,
   addItem(item) {
-    // example of item: { name, price, quantity }
-    // TODO
     const existingItem = this.items.find((e) => e.name === item.name);
-
     if (existingItem) {
-      existingItem.quantity += item.quantity;
-      //
+      alert("Эта задача уже есть в списке");
     } else {
       this.items.push(item);
+      console.log(this.items);
     }
-
-    this.updateTotalCost();
+    this.updateAllTasks();
   },
-  // itemName - наименование товара, itemCount - кол-во удаляемого товара
-  removeItem(itemName, itemCount) {
-    // TODO
+  // itemName - наименование задачи
+  removeItem(itemName) {
     const index = this.items.findIndex((e) => e.name === itemName);
 
-    if (index !== -1 && itemCount <= this.items[index].quantity) {
-      itemCount === this.items[index].quantity
-        ? this.items.splice(index, 1)
-        : (this.items[index].quantity -= itemCount);
+    if (index !== -1) {
+      this.items.splice(index, 1);
     } else {
-      alert("Данного товара недостаточно на складе");
+      alert("Данной задачи нет в списке");
     }
 
-    this.updateTotalCost();
+    this.updateAllTasks();
   },
-  updateTotalCost() {
-    this.totalCost = this.items.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
+  updateAllTasks() {
+    this.totalTasks = this.items.reduce((acc, item) => acc, 0);
   },
 };
 
-stock.updateTotalCost();
-console.log(stock.totalCost);
+stock.updateAllTasks();
+console.log(stock.totalTasks);
 
-// const add = document.getElementById('add');
 add.onclick = addHandler;
 
 function addHandler() {
-  const name = productName.value.trim();
-  const price = +productPrice.value.trim();
-  const quantity = +productQuantity.value.trim();
-
-  if (name && price && price > 0 && quantity && quantity > 0) {
-    stock.addItem({ name, price, quantity });
+  const name = taskName.value.trim();
+  
+  if (name) {
+    stock.addItem({ name });
+    console.log(name);
   }
 
-  productName.value = productPrice.value = productQuantity.value = "";
-
-  updateTotalList();
+  taskName.value = "";
+  updateAllTasks();
 }
 
-function updateTotalList() {
-  productsList.innerHTML = "";
+function updateAllTasks() {
+  tasksList.innerHTML = "";
 
   // 1. Перебор элементов массива
-  stock.items.sort((a, b) => {
-      //if (b.isChecked - a.isChecked === 0){
-      if (!(b.isChecked - a.isChecked)) {
-        if (a.price === b.price) {
-          return a.quantity - b.quantity
-        }
-        return a.price - b.price
-      }
-      return b.isChecked - a.isChecked
+  stock.items
+    .sort((a, b) => {
+      return b.isChecked - a.isChecked;
     })
     .forEach((e) => {
       // 2. При каждой итерации создаем HTML Element
       const li = document.createElement("li");
       li.classList.add("list-group-item", "list-group-item-action");
-
-      // HW - создаём кнопку для удаления
       const removeButton = document.createElement("button");
       removeButton.textContent = "X";
       removeButton.classList.add("btn", "btn-danger", "ms-2");
       removeButton.onclick = () => {
-        // 1. Удаляем товар со склада
-        stock.removeItem(e.name, e.quantity);
-        // 2. Запуск функции обновления контента списка товаров
+        stock.removeItem(e.name);
         li.remove();
-        // updateTotalList();
       };
 
       const checkBox = document.createElement("input");
@@ -101,18 +75,17 @@ function updateTotalList() {
       checkBox.checked = e.isChecked;
       if (checkBox.checked) {
         li.classList.add("list-group-item-secondary");
+        li.style.textDecoration = "line-through";
       }
 
       checkBox.onclick = () => {
         e.isChecked = !e.isChecked;
-        updateTotalList();
+        updateAllTasks();
       };
 
       // 3. Наделяем его текстовым контентом
       li.textContent = `
-              Product name: ${e.name},
-              Product price: ${e.price},
-              Product quantity: ${e.quantity}
+              Task name: ${e.name},
           `;
 
       // HW - добавляем кнопку в каждый элемент списка
@@ -120,11 +93,11 @@ function updateTotalList() {
       li.appendChild(removeButton);
 
       // 4. Добавляем его в productsList
-      productsList.appendChild(li);
+      tasksList.appendChild(li);
     });
 }
 
-stats.onclick = statsHandler;
+/*stats.onclick = statsHandler;
 
 function statsHandler() {
   const itemsCount = stock.items.length;
@@ -169,3 +142,4 @@ function statsHandler() {
 }
 
 // Math.random() возвращает от 0 до 1
+*/

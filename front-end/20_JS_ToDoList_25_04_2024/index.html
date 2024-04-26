@@ -11,42 +11,26 @@
     />
     <link rel="stylesheet" href="./style.css" />
     <script src="./script.js" defer></script>
-    <title>Market</title>
+    <title>To-Do List</title>
   </head>
   <body>
     <div class="container">
-      <label for="productName">Name of product:</label>
+      <label for="todoList">To-Do Task:</label>
       <input
         class="form-control my-1"
         type="text"
-        id="productName"
-        placeholder="Enter product name..."
+        id="taskName"
+        placeholder="Enter task..."
       />
 
-      <label for="productPrice">Price of product:</label>
-      <input
-        class="form-control my-1"
-        type="text"
-        id="productPrice"
-        placeholder="Enter product price..."
-      />
-
-      <label for="productQuantity">Quantity of product:</label>
-      <input
-        class="form-control my-1"
-        type="text"
-        id="productQuantity"
-        placeholder="Enter product quantity..."
-      />
-
-      <!-- Вначале описываем классы из bootstrap, затем вручную созданные -->
+            <!-- Вначале описываем классы из bootstrap, затем вручную созданные -->
       <div class="d-flex justify-content-center my-4 btnContainer">
-        <button class="btn btn-success me-2" id="add">Add product</button>
-        <button class="btn btn-info ms-2" id="stats">Show stats</button>
+        <button class="btn btn-success me-2" id="add">Add task</button>
+        <button class="btn btn-info ms-2" id="stats">Show tasks</button>
       </div>
 
       <div class="d-flex justify-content-evenly align-items-center mt-4" >
-        <ol class="list-group" id="productsList"></ol>
+        <ol class="list-group" id="tasksList"></ol>
         <ol class="list-group" id="statsList"></ol>
       </div>
     </div>
