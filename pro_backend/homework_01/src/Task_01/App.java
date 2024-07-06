@@ -2,17 +2,7 @@ package Task_01;
 
 public class App {
 
-    private static int counter;
-
-    public static synchronized void incCounter(){
-        counter++;
-    };
-
-    public static int getCounter(){
-        return counter;
-    }
-
-    public static void main(String[] args) {
+     public static void main(String[] args) {
 
         MyThread myThread = new MyThread();
         myThread.start();
@@ -23,7 +13,7 @@ public class App {
             throw new RuntimeException(e);
         }
 
-        System.out.println("Counter = " + getCounter());
+        System.out.println("Counter = " + Numbers.getCounter());
 
     }
 }
